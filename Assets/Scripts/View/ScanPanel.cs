@@ -9,6 +9,7 @@ public class ScanPanel : PanelBase
 {
     [SerializeField] private RawImage cameraTexture;
     [SerializeField] private Text result;
+    [SerializeField] private Text version;
 
     private WebCamTexture webCameraTexture;
     private BarcodeReader barcodeReader = new BarcodeReader();
@@ -27,6 +28,7 @@ public class ScanPanel : PanelBase
         webCameraTexture.Play();  //开始实时显示
 #endif
         barcodeReader.AutoRotate = true;
+        version.text = $"v {Application.version}";
     }
     /// <summary>
     /// 检索二维码方法

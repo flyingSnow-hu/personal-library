@@ -46,9 +46,9 @@ public class Database{
         Save();
     }
 
-    public IEnumerator<BookRecord> GetAll()
+    public BookRecord[] GetAll()
     {
-        return recordDict.Values.GetEnumerator();
+        return recordDict.Values.ToArray();
     } 
 
     public BookRecord Get(int bookId)

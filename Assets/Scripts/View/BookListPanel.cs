@@ -14,7 +14,9 @@ public class BookListPanel : PanelBase
 
     public override void Init()
     {
-        Reload(Database.Instance.GetAll());
+        var books = Database.Instance.GetAll();
+        Array.Sort(books, SortByName);
+        Reload(books);
     }
 
     public override void Clear()
@@ -26,22 +28,36 @@ public class BookListPanel : PanelBase
         cells.Clear();
     }
 
-    private void Reload(IEnumerator<BookRecord> enumerator)
+    private void Reload(BookRecord[] books)
     {
-        var count = 0;
-        enumerator.Reset();
-        while(enumerator.MoveNext())
+        Clear();
+        for (int i = 0; i < books.Length; i++)
         {
             var cell = Instantiate<BookCell>(CellPrefab, container);
-            cell.SetBook(enumerator.Current);
+            cell.SetBook(books[i]);
             cells.Add(cell);
-            count++;
         }
-        countTxt.text = $"共{count}个结果";
+        countTxt.text = $"共{books.Length}个结果";
     }
 
     public void OnGoBackBtn()
     {
         ViewManager.Instance.GoBack();
     }
+
+    #region 排序
+    public int SortByName(BookRecord b1, BookRecord b2)
+    {
+        int ret = string.CompareOrdinal(b1.name, b2.name);
+        if (ret == 0)
+        {
+            ret = string.CompareOrdinal(b1.classification, b2.classification);
+        }
+        if (ret == 0)
+        {
+            ret = b1.id - b2.id;
+        }
+        return ret;
+    }
+    #endregion
 }
