@@ -99,7 +99,7 @@ public class DetailPanel : PanelBase
         if(string.IsNullOrEmpty(isbn))
         {
             idText.text = Database.Instance.GetNewID().ToString();
-            isbnField.text = isbn;
+            Clear();
         }else
         {
             var book = Database.Instance.Get(isbn);
@@ -135,6 +135,7 @@ public class DetailPanel : PanelBase
         if (book == null)
         {
             Clear();
+            isbnField.text = isbn;
             errorText.text = $"<a href='https://www.douban.com/search?q={isbn}'>isbn{isbn}</a>\n没有检索到合适的结果!";
         }else{
             ShowBook(book);
