@@ -28,6 +28,11 @@ public class ScanPanel : PanelBase
         webCameraTexture.Play();  //开始实时显示
 #endif
         barcodeReader.AutoRotate = true;
+        barcodeReader.Options = new DecodingOptions()
+            {
+                CharacterSet = "0123456789",
+                PossibleFormats = new BarcodeFormat[]{BarcodeFormat.EAN_13}
+            };
         version.text = $"v {Application.version}";
     }
     /// <summary>

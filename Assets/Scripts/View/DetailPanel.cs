@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -19,6 +20,16 @@ public class DetailPanel : PanelBase
     [SerializeField] private Dropdown readStatus;
     [SerializeField] private Dropdown classification;
     private BookRecord crntBook;
+
+    private void Awake()
+    {
+        classification.ClearOptions();
+        classification.AddOptions(
+            Config.Classifications.Select(
+                (s,i)=>new Dropdown.OptionData($"{i}.{s}")
+            ).ToList()
+        );
+    }
 
     private void ShowBook(BookRecord book)
     {

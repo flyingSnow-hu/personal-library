@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class BookCell : MonoBehaviour
 {
+    [SerializeField] StatusIcons icons;  
     [SerializeField] Text nameTxt;
     [SerializeField] Text authorTxt;
+    [SerializeField] Image icon;
     private int bookId;
 
     public void SetBook(BookRecord book)
@@ -14,6 +16,7 @@ public class BookCell : MonoBehaviour
         this.bookId = book.id;
         nameTxt.text = book.name;
         authorTxt.text = book.author;
+        icon.overrideSprite = icons.icons[book.status];
     }
 
     public void OnClick()

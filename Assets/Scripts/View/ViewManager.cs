@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using NPinyin;
 using UnityEngine;
 public class ViewManager:MonoBehaviour
 {
@@ -67,5 +70,27 @@ public class ViewManager:MonoBehaviour
 
     public void OpenScanPanel(){
         Open(scanPanel);
+    }
+    static void Test()
+    {
+        string[] arr = {"阿尔巴尼亚", "一刀切", "ABC", "长大123，长度"};
+        //发音 LCID：0x00000804
+        CultureInfo PronoCi = new CultureInfo(0x00000804);
+
+        Array.Sort(arr, PinyinComparer.Compare);
+
+        Debug.Log("按发音排序:");
+        for (int i = arr.GetLowerBound(0); i <= arr.GetUpperBound(0); i++)
+            Debug.LogFormat("[{0}]:\t{1}", i, arr[i]);
+        //笔画数 LCID：0x00020804
+        // CultureInfo StrokCi = new CultureInfo(0x00020804);
+
+        // System.Threading.Thread.CurrentThread.CurrentCulture = StrokCi;
+        
+        // Array.Sort(arr);
+
+        // Debug.Log("按笔划数排序:");
+        // for (int i = arr.GetLowerBound(0); i <=arr.GetUpperBound(0); i++)
+        //     Debug.LogFormat("[{0}]:/t{1}", i, arr.GetValue(i));
     }
 } 
