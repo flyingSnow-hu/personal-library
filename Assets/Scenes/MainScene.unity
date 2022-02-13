@@ -4239,7 +4239,7 @@ MonoBehaviour:
   ClassTitlePrefab: {fileID: 542959976775434695, guid: 18d2927ae01188f4eb383dae66187d0d, type: 3}
   container: {fileID: 1824067223}
   countTxt: {fileID: 1814788441}
-  searchTxt: {fileID: 0}
+  keywordTxt: {fileID: 776071816}
 --- !u!1 &932171223
 GameObject:
   m_ObjectHideFlags: 0
@@ -6941,7 +6941,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1550288529}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 919965206}
+        m_TargetAssemblyTypeName: BookListPanel, Assembly-CSharp
+        m_MethodName: OnSearchClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1550288529
 MonoBehaviour:
   m_ObjectHideFlags: 0

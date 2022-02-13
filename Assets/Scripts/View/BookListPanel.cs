@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,15 +12,13 @@ public class BookListPanel : PanelBase
     [SerializeField] ClassTitle ClassTitlePrefab;
     [SerializeField] Transform container;
     [SerializeField] Text countTxt;
-    [SerializeField] Text searchTxt;
+    [SerializeField] InputField keywordTxt;
 
     private List<GameObject> cells = new List<GameObject>();
 
     public override void Init()
     {
-        var books = Database.Instance.GetAll();
-        Array.Sort(books, SortByType);
-        Reload(books);
+        FilterBooks();
     }
 
     public override void Clear()
@@ -60,7 +59,27 @@ public class BookListPanel : PanelBase
 
     public void OnSearchClick()
     {
+        FilterBooks();
+    }
 
+    private void FilterBooks()
+    {
+        var books = Database.Instance.GetAll();
+        var keyword = keywordTxt.text;
+        if (!string.IsNullOrEmpty(keyword))
+        {
+            books = books.Where(
+                book=>{
+                    return book.name.Contains(keyword) ||
+                            book.desc.Contains(keyword) || 
+                            book.author.Contains(keyword) || 
+                            book.publisher.Contains(keyword) ||
+                            book.isbn.Contains(keyword) ;
+                }
+            ).ToArray();
+        }
+        Array.Sort(books, SortByType);
+        Reload(books);
     }
 
     #region 排序

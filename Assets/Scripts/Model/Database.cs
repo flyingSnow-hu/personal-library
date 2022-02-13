@@ -24,10 +24,6 @@ public class Database{
 
     public void Add(BookRecord book)
     {
-        if (recordDict.ContainsKey(book.id))
-        {
-            
-        }
         Modify(book);
     }
     public void Modify(BookRecord book)
@@ -50,6 +46,11 @@ public class Database{
     {
         return recordDict.Values.ToArray();
     } 
+
+    public IEnumerator<BookRecord> GetEnumerator()
+    {
+        return recordDict.Values.GetEnumerator();
+    }
 
     public BookRecord Get(int bookId)
     {
