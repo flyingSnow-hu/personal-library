@@ -85,7 +85,15 @@ public class DetailPanel : PanelBase
 
     public void OnSaveClick()
     {
-        var bookId = int.Parse(idText.text);
+        int bookId;
+        if (string.IsNullOrEmpty(idText.text))
+        {
+            bookId = Database.Instance.GetNewID();
+            idText.text = bookId.ToString();
+        }else
+        {
+            bookId = int.Parse(idText.text);
+        }
         var book = this.crntBook;
         if (book == null)
         {
