@@ -26,7 +26,7 @@ public static class DoubanSpider
             BookRecord bookDetail = new BookRecord();
             bookDetail.name = node.SelectSingleNode("//div[@class='title']//a").InnerText;
             bookDetail.imageUrl = node.SelectSingleNode("//div[@class='pic']//img").Attributes["src"].Value;
-            bookDetail.detailUrl = node.SelectSingleNode("//a[@class='nbg']").Attributes["href"].Value;
+            // bookDetail.detailUrl = node.SelectSingleNode("//a[@class='nbg']").Attributes["href"].Value;
             bookDetail.isbn = isbn;
 
             var author_publisher = node.SelectSingleNode("//span[@class='subject-cast']").InnerText;

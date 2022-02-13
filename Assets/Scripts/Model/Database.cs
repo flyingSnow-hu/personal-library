@@ -15,11 +15,11 @@ public class Database{
 
     public static Database Instance {get; private set;} = new Database();
     private Database(){
-        path = Path.Combine(Application.persistentDataPath, "BookLibrary.json");
+        DataPath = Path.Combine(Application.persistentDataPath, "BookLibrary.json");
         Load();
     }
 
-    private string path;
+    public string DataPath {get; private set;}
     private Dictionary<int, BookRecord> recordDict = new Dictionary<int, BookRecord>();
 
     public void Add(BookRecord book)
@@ -93,15 +93,15 @@ public class Database{
         // database.ids = bookIds;
         database.books = books;
         string json = JsonUtility.ToJson(database);        
-        File.WriteAllText(path, json);
+        File.WriteAllText(DataPath, json);
     }
 
     private void Load()
     {
         recordDict.Clear();
 
-        if (File.Exists(path)){
-            string json = File.ReadAllText(path);
+        if (File.Exists(DataPath)){
+            string json = File.ReadAllText(DataPath);
             SerializedDatabase database = JsonUtility.FromJson<SerializedDatabase>(json);
             for (int i = 0; i < database.books.Length; i++)
             {

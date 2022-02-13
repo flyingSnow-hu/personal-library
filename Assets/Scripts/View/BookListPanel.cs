@@ -11,6 +11,7 @@ public class BookListPanel : PanelBase
     [SerializeField] ClassTitle ClassTitlePrefab;
     [SerializeField] Transform container;
     [SerializeField] Text countTxt;
+    [SerializeField] Text searchTxt;
 
     private List<GameObject> cells = new List<GameObject>();
 
@@ -57,6 +58,11 @@ public class BookListPanel : PanelBase
         ViewManager.Instance.GoBack();
     }
 
+    public void OnSearchClick()
+    {
+
+    }
+
     #region 排序
     public int SortByType(BookRecord b1, BookRecord b2)
     {
@@ -71,6 +77,7 @@ public class BookListPanel : PanelBase
         }
         return ret;
     }
+
     public int SortByName(BookRecord b1, BookRecord b2)
     {
         int ret = PinyinComparer.Compare(b1.name, b2.name);
