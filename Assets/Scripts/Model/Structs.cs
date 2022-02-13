@@ -7,10 +7,8 @@ public class BookRecord
     public string name;
     public string author;
     public string publisher;
-    public string position;
     public string desc;
     public string imageUrl;
-    // public string detailUrl;
     public string isbn;
     public string classification = "0";
     public int status;

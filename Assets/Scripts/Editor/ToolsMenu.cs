@@ -14,7 +14,6 @@ public static class ToolsMenu
     [MenuItem("Tools/Pull from Mobile")]
     public static void PullFromMobile()
     {
-        // var target = Path.Combine(Application.persistentDataPath, "BookLibrary.json");
         var ret = RunCmd("adb", "pull /sdcard/Android/data/com.flyingSnow.Library/files/ .", Application.persistentDataPath);
         Debug.Log(ret[0]);
         Debug.Log(ret[1]);
