@@ -109,8 +109,8 @@ public class DetailPanel : PanelBase
     {
         if(string.IsNullOrEmpty(isbn))
         {
-            idText.text = Database.Instance.GetNewID().ToString();
             Clear();
+            idText.text = Database.Instance.GetNewID().ToString();
         }else
         {
             var book = Database.Instance.Get(isbn);
