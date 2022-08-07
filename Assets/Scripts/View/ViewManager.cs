@@ -25,6 +25,14 @@ public class ViewManager:MonoBehaviour
         OpenScanPanel();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoBack();
+        }
+    }
+
     private void Open(PanelBase panel)
     {
         if (panelStack.Count > 0) 
@@ -40,15 +48,13 @@ public class ViewManager:MonoBehaviour
 
     public void GoBack()
     {
-        if (panelStack.Count > 0) 
+        if (panelStack.Count > 1) 
         {
             var top = panelStack.Pop();
             top.Clear();
             top.gameObject.SetActive(false);
-        }
 
-        if (panelStack.Count > 0) {
-            var top = panelStack.Peek();
+            top = panelStack.Peek();
             top.gameObject.SetActive(true);
             top.Init();
         }

@@ -10,11 +10,12 @@ public class BookListPanel : PanelBase
 {
     [SerializeField] BookCell CellPrefab;
     [SerializeField] ClassTitle ClassTitlePrefab;
-    [SerializeField] Transform container;
+    [SerializeField] InfiniteList container;
     [SerializeField] Text countTxt;
     [SerializeField] InputField keywordTxt;
+    [SerializeField] Transform pool;
 
-    private List<GameObject> cells = new List<GameObject>();
+    private LinkedList<BookCell> freeCells = new LinkedList<BookCell>();
 
     public override void Init()
     {
@@ -23,32 +24,37 @@ public class BookListPanel : PanelBase
 
     public override void Clear()
     {
-        for (int i = cells.Count - 1; i >= 0 ; i--)
-        {
-            GameObject.Destroy(cells[i].gameObject);
-        }
-        cells.Clear();
+        // for (int i = cells.Count - 1; i >= 0 ; i--)
+        // {
+        //     GameObject.Destroy(cells[i].gameObject);
+        // }
+        // cells.Clear();
     }
 
     private void Reload(BookRecord[] books)
     {
         Clear();
-        for (int i = 0; i < books.Length; i++)
-        {
-            var crntBook = books[i];
-            var classification = int.Parse(crntBook.classification);
-
-            if (i == 0 || crntBook.classification != books[i-1].classification)
+        container.GetCountFunc = ()=>books.Count();
+        container.GetHeightFunc = i=>80;
+        container.GetItemFunc = i=>{
+            BookCell cell;
+            if (freeCells.Count > 0)
             {
-                var classCell = Instantiate<ClassTitle>(ClassTitlePrefab, container);
-                classCell.SetName($"{classification}.{Config.Classifications[classification]}");
-                cells.Add(classCell.gameObject);
+                cell = freeCells.First.Value;                
+                cell.transform.SetParent(container.transform);
+                freeCells.RemoveFirst();
+            }else{
+                cell = Instantiate<BookCell>(CellPrefab, container.transform);
             }
-
-            var cell = Instantiate<BookCell>(CellPrefab, container);
             cell.SetBook(books[i]);
-            cells.Add(cell.gameObject);
-        }
+            return cell.gameObject;
+        };
+        container.RecycleFunc = obj=>
+        {
+            freeCells.AddLast(obj.GetComponent<BookCell>());
+            obj.transform.SetParent(pool);
+        };
+        container.Reload();
         countTxt.text = $"共{books.Length}个结果";
     }
 

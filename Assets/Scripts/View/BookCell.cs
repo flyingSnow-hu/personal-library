@@ -11,6 +11,11 @@ public class BookCell : MonoBehaviour
     [SerializeField] Image icon;
     private int bookId;
 
+    public void SetBook(BookRecord book, int index)
+    {
+        SetBook(book);
+        nameTxt.text = $"{index}.{book.name}";
+    }
     public void SetBook(BookRecord book)
     {
         this.bookId = book.id;
